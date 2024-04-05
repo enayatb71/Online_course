@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-1 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-6">
+                    <img src="static/img/login2.png" style="width: 100%;"/>
+                </div>
+                <div class="col-4" style="margin: auto;">
+                    <h2>Login</h2>
+                    <hr>
+                    {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                            <div class="alert alert-danger" >{{ error }}</div>
+                        {% endfor %}    
+                    {% endif %}
+                    {% if form.password.errors %}
+                        {% for error in form.password.errors %}
+                            <div class="alert alert-danger" >{{ error }}</div>
+                        {% endfor %}    
+                    {% endif %}
+                    <!-- flash message -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category,message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <form action="{{ url_for('login') }}" method="post" novalidate>
+                        {{ form.csrf_token }}
+                        <div class="fprm-group mb-3 " >
+                            {{form.email(placeholder='Enter your Email', class='form-control')}}
+                        </div>
+                        <div class="fprm-group mb-3 " >
+                            {{form.password(placeholder='Enter Password', class='form-control')}}
+                        </div>
+                        <div class="fprm-group mb-3 " >
+                            <button class="btn btn-small btn-primary w-100" >Sign In</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="row">
+                {% include 'admin_menu.html' %}
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header">Add New Episode</div>
+                        <div class="card-body">
+                            <!-- show form control message -->
+                            {% if form.title.errors %}
+                                {% for error in form.title.errors %}
+                                    <div class="alert alert-danger" >{{ error }}</div>
+                                {% endfor %}    
+                            {% endif %}
+                            {% if form.content.errors %}
+                                {% for error in form.content.errors %}
+                                    <div class="alert alert-danger" >{{ error }}</div>
+                                {% endfor %}    
+                            {% endif %}
+                                {% if form.number.errors %}
+                                {% for error in form.number.errors %}
+                                    <div class="alert alert-danger" >{{ error }}</div>
+                                {% endfor %}    
+                            {% endif %}
+                            <!-- show flash message -->
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                    {% for category,message in messages %}
+                                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                            <form action="{{ url_for('add_episode') }}" method="post"  novalidate>
+                                {{ form.csrf_token }}
+                                <div class="form-group mb-3 " >
+                                    {{form.title(placeholder='Enter Title', class='form-control')}}
+                                </div>
+                                <div class="form-group mb-3 " >
+                                    {{form.content(placeholder='Enter Content', class='form-control')}}
+                                </div>
+                                <div class="form-group mb-3 " >
+                                    {{form.number(placeholder='Enter Number Of Episode', class='form-control')}}
+                                </div>
+                                <div class="form-group mb-3">
+                                    <select name="course_id" class="form-control">
+                                        {% if courses %}
+                                            {% for course in courses %}
+                                            <option value="{{course.id}}">{{course.title}}</option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                                <div class="form-group mb-3 " >
+                                    <button class="btn btn-small btn-success w-100" >Add Episode</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

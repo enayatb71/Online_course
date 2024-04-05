@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="row">
+                {% include 'admin_menu.html' %}
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header">Content</div>
+                        <div class="card-body text-center">
+                            <h3 style="color: green;">Welcome To Admin Panel</h3>
+                            <img src="static/img/admin_panel.png" style="width: 80%;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="row">
+                {% include 'admin_menu.html' %}
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header">Course List</div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Date Created</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for course in courses %}
+                                    <tr>
+                                        <th scope="row">{{ loop.index }}</th>
+                                        <td>{{ course.title }}</td>
+                                        <td>{{ course.price }}</td>
+                                        <td>{{ course.date_created }}</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a href="/edit_course?id={{course.id}}" class="btn btn-warning btn-small">Edit</a>
+                                                <form action="{{url_for('course_list')}}?id={{course.id}}" method="post">
+                                                    <button href="#" class="btn btn-danger btn-small">Del</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                              </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

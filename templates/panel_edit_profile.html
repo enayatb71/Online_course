@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="row">
+                {% include 'panel_menu.html' %}
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header">Edit Profile</div>
+                        <div class="card-body">
+                            <div class="col-md-10 text-center" style="margin: auto; ">
+                                <img src="static/img/edit_info.png" style="width: 45%; margin:auto;"/>
+                                {% if form.name.errors %}
+                                    {% for error in form.name.errors %}
+                                        <div class="alert alert-danger" >{{ error }}</div>
+                                    {% endfor %}    
+                                {% endif %}
+                                {% if form.email.errors %}
+                                    {% for error in form.email.errors %}
+                                        <div class="alert alert-danger" >{{ error }}</div>
+                                    {% endfor %}    
+                                {% endif %}
+                                <!-- flash message -->
+                                {% with messages = get_flashed_messages(with_categories=true) %}
+                                    {% if messages %}
+                                        {% for category,message in messages %}
+                                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endwith %}
+                                <form action="{{ url_for('edit_profile') }}" method="post" novalidate>
+                                    {{ form.csrf_token }}
+                                    <div class="fprm-group mb-3 " >
+                                        {{form.name(placeholder='Enter old password', class='form-control', value=user.name)}}
+                                    </div>
+                                    <div class="fprm-group mb-3 " >
+                                        {{form.email(placeholder='Enter new Password', class='form-control', value=user.email)}}
+                                    </div>
+                                    <div class="fprm-group mb-3 " >
+                                        <button class="btn btn-small btn-success w-100" >Save Change</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

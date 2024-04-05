@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+         <!-- show flash message -->
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <img src="{{ url_for('static', filename = course.image) }}" style="width: 100%;"/>
+                            <hr>
+                            <ul class="list-group text-center">
+                                <li class="list-group-item">Price: </li>
+                                <li class="list-group-item">{{ course.price }}</li>
+                            </ul>
+                            <form class="mt-3" action="{{url_for('register_add')}}?id={{course.id}}" method="post">
+                                <button class="btn btn-small btn-success w-100" style="width: 80%;" >Register In Course</button>
+                            </form>
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                    {% for category,message in messages %}
+                                        <div class="alert alert-{{ category }} mt-3" >{{ message }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                 </div>
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header"><b>{{course.title}}</b></div>
+                        <div class="card-body">
+                            {{ course.content }}
+                        </div>
+                    </div>
+                    <div class="card mt-4 mb-5">
+                        <div class="card-header"><b>List of Episodes:</b></div>
+                        <div class="card-body mb-3">
+                            <ul>
+                                {% for episode in episodes %}
+                                    <li class="list-group-item">
+                                        <span class="badge bg-info" >{{ episode.number }}</span>
+                                        <span class="text-secondary" ><b>{{ episode.title }}</b></span>
+                                        <ul>
+                                            <li class="list-group-item">
+                                                {{ episode.content }}
+                                            </li>
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
